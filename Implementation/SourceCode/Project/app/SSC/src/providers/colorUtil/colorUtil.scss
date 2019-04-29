@@ -1,0 +1,28 @@
+$prefix: "--"; //Prefix string for custom CSS properties
+
+//Merges a variable name with $prefix
+@function custom-property-name($name) {
+  @return $prefix + $name;
+}
+
+// Defines a custom property
+@mixin define-custom-property($name, $value) {
+  #{custom-property-name($name)}: $value;
+}
+
+body {
+  // Append pre-defined colors in $colors:
+  @each $name, $value in $colors {
+    @include define-custom-property($name, $value);
+  }
+
+  // Append graph colors in $colors:
+  @each $name, $value in $graph-light {
+    @include define-custom-property($name, $value);
+  }
+
+    // Append graph colors in $colors:
+    @each $name, $value in $graph-dark {
+      @include define-custom-property($name, $value);
+    }
+}

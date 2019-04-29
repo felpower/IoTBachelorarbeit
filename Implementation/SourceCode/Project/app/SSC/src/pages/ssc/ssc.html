@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Statistics</ion-title>
+    <ion-buttons end padding-right>
+      <button (click)="navigateToSmartMirror()">
+        <ion-icon name="desktop"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div class="row" style="flex-wrap: wrap;">
+    <div class="col-33">
+      <ion-card>
+        <ion-card-header>
+          Shower
+        </ion-card-header>
+        <ion-card-content>
+          <p text-center style="font-weight: bold">Average Showertime</p>
+          <canvas #barCanvas></canvas>
+          <p text-center padding-top style="font-weight: bold">Times showered</p>
+          <canvas #doughnutCanvas></canvas>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div class="col-33">
+      <ion-card>
+        <ion-card-header>
+          Toilet
+        </ion-card-header>
+        <ion-card-content>
+          <p text-center>Toilet Status:</p>
+          <p text-center style="font-weight: bold">{{occupationState}}</p>
+          <ion-card>
+            <ion-card-header>
+              Rolls
+            </ion-card-header>
+            <ion-card-content>
+              <ion-row>
+                <ion-col *ngFor="let roll of rolls" col-2>
+                  <img src="assets/imgs/toilet-paper.svg"/>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

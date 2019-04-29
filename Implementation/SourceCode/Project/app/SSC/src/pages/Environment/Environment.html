@@ -1,0 +1,34 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Environment</ion-title>
+    <ion-buttons end padding-right>
+      <button (click)="navigateToSmartMirror()">
+        <ion-icon name="desktop"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div class="row" style="flex-wrap: wrap;">
+    <div class="col-33">
+      <ion-card>
+        <ion-card-header>
+          Environment
+        </ion-card-header>
+        <ion-card-content>
+          <p text-center>Humidity:</p>
+          <p text-center style="font-weight: bold">{{humidity}}</p>
+          <p text-center>Rain:</p>
+          <p text-center style="font-weight: bold">{{rain}}</p>
+          <p text-center>Temperature:</p>
+          <p text-center style="font-weight: bold">{{temperature}}</p>
+          <p text-center>Temperature Exact:</p>
+          <p text-center style="font-weight: bold">{{temp_exact}}</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

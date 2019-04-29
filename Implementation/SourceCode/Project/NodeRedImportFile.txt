@@ -1,0 +1,558 @@
+[
+    {
+        "id": "b0e49a14.f295c8",
+        "type": "tab",
+        "label": "Temperature",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "fd9b09e0.849dc8",
+        "type": "mqtt in",
+        "z": "b0e49a14.f295c8",
+        "name": "",
+        "topic": "node2/th",
+        "qos": "2",
+        "broker": "4c3f13f9.46bcdc",
+        "x": 87.99999237060547,
+        "y": 32.99997806549072,
+        "wires": [
+            [
+                "1014a9ef.126916"
+            ]
+        ]
+    },
+    {
+        "id": "bfd94134.b964f",
+        "type": "mqtt in",
+        "z": "b0e49a14.f295c8",
+        "name": "",
+        "topic": "node1/water",
+        "qos": "2",
+        "broker": "4c3f13f9.46bcdc",
+        "x": 77.99999237060547,
+        "y": 132.99997806549072,
+        "wires": [
+            [
+                "239c2f5e.201e"
+            ]
+        ]
+    },
+    {
+        "id": "958f2ecc.03605",
+        "type": "mqtt in",
+        "z": "b0e49a14.f295c8",
+        "name": "",
+        "topic": "node3/th/humidity",
+        "qos": "2",
+        "broker": "4c3f13f9.46bcdc",
+        "x": 97.99999237060547,
+        "y": 252.99997806549072,
+        "wires": [
+            [
+                "b0b71839.cbe0e8"
+            ]
+        ]
+    },
+    {
+        "id": "cb1d7ee5.8f98b",
+        "type": "mqtt in",
+        "z": "b0e49a14.f295c8",
+        "name": "",
+        "topic": "node3/th/temperature",
+        "qos": "2",
+        "broker": "4c3f13f9.46bcdc",
+        "x": 107.99999237060547,
+        "y": 352.9999780654907,
+        "wires": [
+            [
+                "4372f43f.a64c1c"
+            ]
+        ]
+    },
+    {
+        "id": "881ed00c.682eb",
+        "type": "mqtt in",
+        "z": "b0e49a14.f295c8",
+        "name": "",
+        "topic": "node6/requestUsers",
+        "qos": "2",
+        "broker": "4c3f13f9.46bcdc",
+        "x": 110.79244232177734,
+        "y": 450.18164443969727,
+        "wires": [
+            [
+                "a1a2048b.7f0698"
+            ]
+        ]
+    },
+    {
+        "id": "a1a2048b.7f0698",
+        "type": "function",
+        "z": "b0e49a14.f295c8",
+        "name": "append body",
+        "func": "msg.payload = {\n    \"email\":\"patrick.felbauer@gmail.com\",\n    \"secret\":\"ada\"\n    };\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 368.78960037231445,
+        "y": 449.50537872314453,
+        "wires": [
+            [
+                "bd42095c.5630c8"
+            ]
+        ]
+    },
+    {
+        "id": "bd42095c.5630c8",
+        "type": "http request",
+        "z": "b0e49a14.f295c8",
+        "name": "getUsers",
+        "method": "POST",
+        "ret": "obj",
+        "url": "ssc.radix-project.com/new/getUsers.php",
+        "tls": "",
+        "x": 588.7896041870117,
+        "y": 452.42311668395996,
+        "wires": [
+            [
+                "32a383b0.1d3e2c",
+                "402ab152.f9a11"
+            ]
+        ]
+    },
+    {
+        "id": "32a383b0.1d3e2c",
+        "type": "function",
+        "z": "b0e49a14.f295c8",
+        "name": "parseUsers",
+        "func": "var message;\nfor(var i=0; i < msg.payload.length; i++){\n   message += msg.payload[i].name+\"|\";\n}\nmsg = message.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 804.0142211914062,
+        "y": 453.005615234375,
+        "wires": [
+            [
+                "a20085ce.e11b98",
+                "b6f28c7.87ec47"
+            ]
+        ]
+    },
+    {
+        "id": "a20085ce.e11b98",
+        "type": "mqtt out",
+        "z": "b0e49a14.f295c8",
+        "name": "",
+        "topic": "node6/users",
+        "qos": "",
+        "retain": "",
+        "broker": "4c3f13f9.46bcdc",
+        "x": 1064.7923583984375,
+        "y": 453.3351745605469,
+        "wires": []
+    },
+    {
+        "id": "b6f28c7.87ec47",
+        "type": "debug",
+        "z": "b0e49a14.f295c8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1058.0140380859375,
+        "y": 502.005615234375,
+        "wires": []
+    },
+    {
+        "id": "e3fa0747.823a98",
+        "type": "mqtt in",
+        "z": "b0e49a14.f295c8",
+        "name": "",
+        "topic": "node7/scale",
+        "qos": "2",
+        "broker": "4c3f13f9.46bcdc",
+        "x": 89.78409576416016,
+        "y": 587.1875,
+        "wires": [
+            [
+                "b928f64f.e81e88"
+            ]
+        ]
+    },
+    {
+        "id": "b928f64f.e81e88",
+        "type": "function",
+        "z": "b0e49a14.f295c8",
+        "name": "append body",
+        "func": "var amount = msg.payload;\nmsg.payload = {\n    \"email\":\"patrick.felbauer@gmail.com\",\n    \"secret\":\"ada\",\n    \"toilet_paper\": amount\n    };\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 359.78125,
+        "y": 588.4090576171875,
+        "wires": [
+            [
+                "8c309af7.6b37b8"
+            ]
+        ]
+    },
+    {
+        "id": "8c309af7.6b37b8",
+        "type": "http request",
+        "z": "b0e49a14.f295c8",
+        "name": "http request",
+        "method": "POST",
+        "ret": "txt",
+        "url": "ssc.radix-project.com/new/setToiletPaper.php",
+        "tls": "",
+        "x": 659.0142211914062,
+        "y": 588.0056762695312,
+        "wires": [
+            [
+                "287f2603.a5142a"
+            ]
+        ]
+    },
+    {
+        "id": "287f2603.a5142a",
+        "type": "debug",
+        "z": "b0e49a14.f295c8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1060.1051025390625,
+        "y": 591.0056762695312,
+        "wires": []
+    },
+    {
+        "id": "4067d0e7.298a3",
+        "type": "mqtt in",
+        "z": "b0e49a14.f295c8",
+        "name": "",
+        "topic": "node5/door",
+        "qos": "2",
+        "broker": "4c3f13f9.46bcdc",
+        "x": 94,
+        "y": 693,
+        "wires": [
+            [
+                "49608abb.59cd84"
+            ]
+        ]
+    },
+    {
+        "id": "49608abb.59cd84",
+        "type": "function",
+        "z": "b0e49a14.f295c8",
+        "name": "append body",
+        "func": "var amount = msg.payload;\nmsg.payload = {\n    \"email\":\"patrick.felbauer@gmail.com\",\n    \"secret\":\"ada\",\n    \"toilet_paper\": amount\n    };\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 359,
+        "y": 692,
+        "wires": [
+            [
+                "5ecc78c3.22fd78"
+            ]
+        ]
+    },
+    {
+        "id": "5ecc78c3.22fd78",
+        "type": "http request",
+        "z": "b0e49a14.f295c8",
+        "name": "http request",
+        "method": "POST",
+        "ret": "txt",
+        "url": "ssc.radix-project.com/new/setToiletOccupation.php",
+        "tls": "",
+        "x": 661,
+        "y": 697,
+        "wires": [
+            [
+                "ca5866e8.af49c8"
+            ]
+        ]
+    },
+    {
+        "id": "ca5866e8.af49c8",
+        "type": "debug",
+        "z": "b0e49a14.f295c8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1055,
+        "y": 697,
+        "wires": []
+    },
+    {
+        "id": "1014a9ef.126916",
+        "type": "function",
+        "z": "b0e49a14.f295c8",
+        "name": "append body",
+        "func": "var amount = msg.payload;\nmsg.payload = {\n    \"email\":\"patrick.felbauer@gmail.com\",\n    \"secret\":\"ada\",\n    \"temperature_exact\": amount\n    };\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 404,
+        "y": 32,
+        "wires": [
+            [
+                "7f820701.2ad828"
+            ]
+        ]
+    },
+    {
+        "id": "239c2f5e.201e",
+        "type": "function",
+        "z": "b0e49a14.f295c8",
+        "name": "append body",
+        "func": "var amount = msg.payload;\nmsg.payload = {\n    \"email\":\"patrick.felbauer@gmail.com\",\n    \"secret\":\"ada\",\n    \"rain\": amount\n    };\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 397.99163818359375,
+        "y": 136.9036865234375,
+        "wires": [
+            [
+                "e8fedbcb.960ff8"
+            ]
+        ]
+    },
+    {
+        "id": "b0b71839.cbe0e8",
+        "type": "function",
+        "z": "b0e49a14.f295c8",
+        "name": "append body",
+        "func": "var amount = msg.payload;\nmsg.payload = {\n   \"email\":\"patrick.felbauer@gmail.com\",\n    \"secret\":\"ada\",\n    \"humidity\": amount\n    };\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 492.21038818359375,
+        "y": 253.49462890625,
+        "wires": [
+            [
+                "34dce8fa.02a458"
+            ]
+        ]
+    },
+    {
+        "id": "4372f43f.a64c1c",
+        "type": "function",
+        "z": "b0e49a14.f295c8",
+        "name": "append body",
+        "func": "var amount = msg.payload;\nmsg.payload = {\n    \"email\":\"patrick.felbauer@gmail.com\",\n    \"secret\":\"ada\",\n    \"temperature\": amount\n    };\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 493,
+        "y": 360,
+        "wires": [
+            [
+                "a57cf381.f4f49"
+            ]
+        ]
+    },
+    {
+        "id": "a57cf381.f4f49",
+        "type": "http request",
+        "z": "b0e49a14.f295c8",
+        "name": "http request",
+        "method": "POST",
+        "ret": "txt",
+        "url": "ssc.radix-project.com/new/setTemperature.php",
+        "tls": "",
+        "x": 778,
+        "y": 365,
+        "wires": [
+            [
+                "4a296335.7327ac"
+            ]
+        ]
+    },
+    {
+        "id": "34dce8fa.02a458",
+        "type": "http request",
+        "z": "b0e49a14.f295c8",
+        "name": "http request",
+        "method": "POST",
+        "ret": "txt",
+        "url": "ssc.radix-project.com/new/setHumidity.php",
+        "tls": "",
+        "x": 789,
+        "y": 259,
+        "wires": [
+            [
+                "a9fa4bc2.1aa608"
+            ]
+        ]
+    },
+    {
+        "id": "e8fedbcb.960ff8",
+        "type": "http request",
+        "z": "b0e49a14.f295c8",
+        "name": "http request",
+        "method": "POST",
+        "ret": "txt",
+        "url": "ssc.radix-project.com/new/setRain.php",
+        "tls": "",
+        "x": 794,
+        "y": 136,
+        "wires": [
+            [
+                "3a6d47b8.2c9ae8"
+            ]
+        ]
+    },
+    {
+        "id": "7f820701.2ad828",
+        "type": "http request",
+        "z": "b0e49a14.f295c8",
+        "name": "http request",
+        "method": "POST",
+        "ret": "txt",
+        "url": "ssc.radix-project.com/new/setTemperatureExact.php",
+        "tls": "",
+        "x": 794,
+        "y": 30,
+        "wires": [
+            [
+                "aa6c04ee.ce6f48"
+            ]
+        ]
+    },
+    {
+        "id": "aa6c04ee.ce6f48",
+        "type": "debug",
+        "z": "b0e49a14.f295c8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1057,
+        "y": 32,
+        "wires": []
+    },
+    {
+        "id": "3a6d47b8.2c9ae8",
+        "type": "debug",
+        "z": "b0e49a14.f295c8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1064.091064453125,
+        "y": 137.00006103515625,
+        "wires": []
+    },
+    {
+        "id": "a9fa4bc2.1aa608",
+        "type": "debug",
+        "z": "b0e49a14.f295c8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1063.9859619140625,
+        "y": 256.994384765625,
+        "wires": []
+    },
+    {
+        "id": "4a296335.7327ac",
+        "type": "debug",
+        "z": "b0e49a14.f295c8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1066,
+        "y": 366,
+        "wires": []
+    },
+    {
+        "id": "586bcca3.59bde4",
+        "type": "mqtt in",
+        "z": "b0e49a14.f295c8",
+        "name": "",
+        "topic": "node6/shower",
+        "qos": "2",
+        "broker": "4c3f13f9.46bcdc",
+        "x": 92,
+        "y": 535,
+        "wires": [
+            [
+                "4af4a93a.4a72f8"
+            ]
+        ]
+    },
+    {
+        "id": "4af4a93a.4a72f8",
+        "type": "function",
+        "z": "b0e49a14.f295c8",
+        "name": "append body",
+        "func": "var amount = msg.payload;\nmsg.payload = {\n    \"email\":\"patrick.felbauer@gmail.com\",\n    \"secret\":\"ada\",\n    \"duration\": amount\n    };\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 357,
+        "y": 534,
+        "wires": [
+            [
+                "3cc11e98.4b59e2"
+            ]
+        ]
+    },
+    {
+        "id": "3cc11e98.4b59e2",
+        "type": "http request",
+        "z": "b0e49a14.f295c8",
+        "name": "http request",
+        "method": "POST",
+        "ret": "txt",
+        "url": "ssc.radix-project.com/new/setToiletOccupation.php",
+        "tls": "",
+        "x": 659,
+        "y": 539,
+        "wires": [
+            [
+                "46ab2abc.4151f4"
+            ]
+        ]
+    },
+    {
+        "id": "46ab2abc.4151f4",
+        "type": "debug",
+        "z": "b0e49a14.f295c8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1053,
+        "y": 539,
+        "wires": []
+    },
+    {
+        "id": "402ab152.f9a11",
+        "type": "debug",
+        "z": "b0e49a14.f295c8",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 809.781005859375,
+        "y": 489.3606262207031,
+        "wires": []
+    },
+    {
+        "id": "4c3f13f9.46bcdc",
+        "type": "mqtt-broker",
+        "z": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    }
+]
